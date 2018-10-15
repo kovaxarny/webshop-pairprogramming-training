@@ -16,7 +16,7 @@
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
+                <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
@@ -27,14 +27,14 @@
                 <Pattern>${LOG_PATTERN}</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
+                <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
     <Loggers>
         <Logger name="com.pptraining.webshop" level="error" additivity="false">
-            <AppenderRef ref="ErrorAppender" />
+            <AppenderRef ref="ErrorAppender"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="InfoAppender"/>
