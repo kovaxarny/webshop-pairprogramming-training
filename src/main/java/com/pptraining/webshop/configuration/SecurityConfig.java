@@ -24,8 +24,6 @@ import javax.servlet.Filter;
 
 @Configuration
 @EnableOAuth2Client
-//@EnableWebSecurity
-//@Order(1000)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Qualifier("oauth2ClientContext")
