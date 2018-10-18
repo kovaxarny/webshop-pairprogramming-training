@@ -3,17 +3,19 @@ package com.pptraining.webshop.service;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString(exclude = "id")
+
 @EqualsAndHashCode(exclude = "id")
 @Getter
 @Setter
 @Entity
 @Table(name = "user_address")
-public class UserAddressDO {
+public class UserAddressDO implements Serializable{
     @Id
     @Setter(AccessLevel.PRIVATE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +35,4 @@ public class UserAddressDO {
 
     @Column(name = "house_number", length = 32)
     private String houseNumber;
-
-//    @OneToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private UserDO user;
 }
