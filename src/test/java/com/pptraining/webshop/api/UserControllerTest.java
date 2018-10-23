@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,10 +52,28 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserWithPostMethodAPICall() throws Exception {
+    public void createUser_PostAPICall_StatusOK() throws Exception {
         this.mockMvc.perform(post("/api/v1/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userDOJSONObject.toString()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findUserById_GetAPICall_StatusOK() throws Exception {
+        this.mockMvc.perform(get("/api/v1/user/find/{id}",1L))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findUserByUsername_GetAPICall_StatusOK() throws Exception {
+        this.mockMvc.perform(get("/api/v1/user/find?username=Foo"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findAllUser_GetAPICall_StatusOK() throws Exception {
+        this.mockMvc.perform(get("/api/v1/user/find/all?page=1"))
                 .andExpect(status().isOk());
     }
 

@@ -35,14 +35,13 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //TODO JUnit tests
     @GetMapping(path = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDO> findUserById(@RequestParam Long id){
+    public ResponseEntity<UserDO> findUserById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
     }
 
-    @GetMapping(path = "/find/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDO> findUserByUsername(@RequestParam String username){
+    @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDO> findUserByUsername(@RequestParam(value = "username") String username){
         return new ResponseEntity<>(userService.findUserByUsername(username),HttpStatus.OK);
     }
 

@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -41,9 +42,26 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void createUserFromUserDO() throws Exception {
+    public void createUser_FromUserDO_DAOCalled() throws Exception {
         userService.createUser(Mockito.mock(UserDO.class));
         verify(userRepository,times(1)).save(Mockito.any(UserDO.class));
     }
 
+    @Test
+    public void findUserById_IdAsParam_DAOCalled() throws Exception {
+        userService.findUserById(1L);
+        verify(userRepository,times(1)).findById(1L);
+    }
+
+    @Test
+    public void findUserByUsername_StringAsParam_DAOCalled() throws Exception {
+        userService.findUserByUsername("RandomString");
+        verify(userRepository,times(1)).findByUsername("RandomString");
+    }
+
+    @Test
+    public void findAllUser_PageableAsParam_DAOCalled() throws Exception {
+        userService.findAllUser(Mockito.mock(Pageable.class));
+        verify(userRepository,times(1)).findAll(Mockito.any(Pageable.class));
+    }
 }

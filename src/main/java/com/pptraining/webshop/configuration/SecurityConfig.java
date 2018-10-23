@@ -22,6 +22,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.servlet.Filter;
 
+//TODO Olvass utana itt a dolgoknak
 @Configuration
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
