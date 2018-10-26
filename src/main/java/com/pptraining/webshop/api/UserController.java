@@ -1,7 +1,7 @@
 package com.pptraining.webshop.api;
 
 import com.pptraining.webshop.WebshopApplication;
-import com.pptraining.webshop.service.UserDO;
+import com.pptraining.webshop.service.User;
 import com.pptraining.webshop.service.UserService;
 import com.pptraining.webshop.service.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -35,37 +35,77 @@ public class UserController {
         this.userService = userService;
     }
 
+    //TODO Create new user with admin role
     /**
      * This method is used to create a new User entity and save it
      * to the database.
      *
-     * @param userDO This is a new UserDO object.
+     * @param user This is a new User object.
      * @return ResponseEntity This returns a {@link ResponseEntity} with a status code.
      */
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createUser(@RequestBody UserDO userDO){
-        userService.createUser(userDO);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<String> createNewUserAccount(@RequestBody User user){
+        HttpStatus status;
+        String message = "";
+        try {
+            userService.createNewUserAccount(user);
+            status = HttpStatus.OK;
+        }catch (Exception e){
+            message = message + e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(message,status);
     }
 
+    //TODO secure findUserById for admins
     @GetMapping(path = "/find/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDO> findUserById(@PathVariable Long id){
+    public ResponseEntity<User> findUserById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
     }
 
+    //TODO secure findUserByUsername for admins
     @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDO> findUserByUsername(@RequestParam(value = "username") String username){
+    public ResponseEntity<User> findUserByUsername(@RequestParam(value = "username") String username){
         return new ResponseEntity<>(userService.findUserByUsername(username),HttpStatus.OK);
     }
 
+    //TODO secure findAllUser for admins
     /**
-     * This method is used to find all {@link UserDO} object in the database.
+     * This method is used to find all {@link User} object in the database.
      * @param pageable This is a {@link Pageable} object.
      * @return ResponseEntity This returns a {@link ResponseEntity} which contains
      * the found users and a status code.
      */
     @GetMapping(path = "/find/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<UserDO>> findAllUser(@PageableDefault Pageable pageable){
+    public ResponseEntity<Page<User>> findAllUser(@PageableDefault Pageable pageable){
         return new ResponseEntity<>(userService.findAllUser(pageable),HttpStatus.OK);
+    }
+
+    //Register as guest
+    @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity registerAsUser (User user){
+        userService.createNewUserAccount(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //TODO secure admin only
+    @PostMapping(path = "/grantadminroleto")
+    public ResponseEntity grantAdminRoleTo(@RequestParam(value = "id") Long id){
+        //userService.grantAdminRoleTo(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //TODO secure admin only
+    @PostMapping(path = "/revokeadminrolefrom")
+    public ResponseEntity revokeAdminRoleFrom(@RequestParam(value = "id") Long id){
+        //userService.revokeAdminRoleFrom(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/udpateuser", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateUser(@RequestBody User user){
+        //userService.updateUser(user);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

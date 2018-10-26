@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "user_address")
-public class UserAddressDO implements Serializable{
+public class UserAddress implements Serializable{
     @Id
     @Setter(AccessLevel.PRIVATE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +24,13 @@ public class UserAddressDO implements Serializable{
     @Column(name = "zip_code", length = 16)
     private String zipCode;
 
-    @Column(length = 32)
+    @Column
     private String country;
 
-    @Column(length = 32)
+    @Column
     private String city;
 
-    @Column(length = 32)
+    @Column
     private String street;
 
     @Column(name = "house_number", length = 32)

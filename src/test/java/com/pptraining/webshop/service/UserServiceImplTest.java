@@ -42,9 +42,9 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void createUser_FromUserDO_DAOCalled() throws Exception {
-        userService.createUser(Mockito.mock(UserDO.class));
-        verify(userRepository,times(1)).save(Mockito.any(UserDO.class));
+    public void createNewUserAccount_FromUserDO_DAOCalled() throws Exception {
+        userService.createNewUserAccount(Mockito.mock(User.class));
+        verify(userRepository,times(1)).save(Mockito.any(User.class));
     }
 
     @Test

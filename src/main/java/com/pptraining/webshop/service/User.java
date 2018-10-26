@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,14 @@ import javax.validation.constraints.Email;
 @EqualsAndHashCode(exclude = "id")
 @Entity
 @Table(name = "user")
-public class UserDO {
+public class User {
+
+    private enum UserRole{
+        USER,
+        MANAGER,
+        ADMIN
+    }
+
     @Id
     @Setter(AccessLevel.PRIVATE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,19 +31,29 @@ public class UserDO {
     @Column(nullable = false, unique = true, updatable = false, length = 32)
     private String username;
 
-    @Column(name = "first_name", length = 32, nullable = false)
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.USER;
+
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", length = 32, nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Email
-    @Column(length = 64, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(name = "phone_number", length = 24)
     private String phoneNumber;
 
-    @OneToOne(targetEntity = UserAddressDO.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private UserAddressDO address;
+    @OneToOne(targetEntity = UserAddress.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private UserAddress address;
+
+    @Column(updatable = false)
+    private LocalDateTime creationDate;
 }

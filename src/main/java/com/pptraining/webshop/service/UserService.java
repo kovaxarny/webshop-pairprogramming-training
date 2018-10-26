@@ -5,39 +5,39 @@ import org.springframework.data.domain.Pageable;
 
 /**
  * The UserService interface contains the methods which are
- * necessary to manage {@link UserDO} objects.
+ * necessary to manage {@link User} objects.
  *
  * @version 1.0
  */
 public interface UserService {
 
     /**
-     * This method is used to create a new {@link UserDO} object.
-     * @param userDO This is a new {@link UserDO} object.
+     * This method is used to create a new {@link User} object.
+     * @param user This is a new {@link User} object.
      */
-    void createUser(UserDO userDO);
+    void createNewUserAccount(User user);
 
     /**
-     * This method is used to find a {@link UserDO} in the database
+     * This method is used to find a {@link User} in the database
      * by the id.
      * @param id This is an id.
-     * @return UserDO This is the found {@link UserDO} object.
+     * @return User This is the found {@link User} object.
      */
-    UserDO findUserById(Long id);
+    User findUserById(Long id);
 
     /**
-     * This method is used to find a {@link UserDO} in the database
+     * This method is used to find a {@link User} in the database
      * by the username.
      * @param username This is a username.
-     * @return UserDO This is the found {@link UserDO} object.
+     * @return User This is the found {@link User} object.
      */
-    UserDO findUserByUsername(String username);
+    User findUserByUsername(String username);
 
     /**
-     * This method is used to find all the {@link UserDO} objects
+     * This method is used to find all the {@link User} objects
      * in the database.
      * @param pageable This is a {@link Pageable} object.
-     * @return Page This is a collection of the found {@link UserDO} objects.
+     * @return Page This is a collection of the found {@link User} objects.
      */
-    Page<UserDO> findAllUser(Pageable pageable);
+    Page<User> findAllUser(Pageable pageable);
 }
