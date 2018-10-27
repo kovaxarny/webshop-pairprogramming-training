@@ -15,7 +15,7 @@ public interface UserService {
      * This method is used to create a new {@link User} object.
      * @param user This is a new {@link User} object.
      */
-    void createNewUserAccount(User user);
+    void createNewUserAccount(User user) throws RuntimeException;
 
     /**
      * This method is used to find a {@link User} in the database

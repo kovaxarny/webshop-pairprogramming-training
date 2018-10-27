@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -28,20 +29,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createNewUserAccount(User user){
-        try{
-            UserValidator.isValidUserAccount(user);
-        }catch (Exception e){
-            LOGGER.error(e);
-            throw e;
-        }
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new AccountWithEmailAlreadyExistsException("Email is already in use.");
-        }
-
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new AccountWithUsernameAlreadyExistsException("Username is already in use.");
-        }
+    public void createNewUserAccount(User user) throws RuntimeException{
+        validateUser(user);
+        isUsernameTaken(user.getUsername());
+        isEmailTaken(user.getEmail());
         user.setCreationDate(LocalDateTime.now());
         userRepository.save(user);
     }
@@ -70,5 +61,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findAllUser(Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    private void isUsernameTaken(String username) throws RuntimeException{
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new AccountWithUsernameAlreadyExistsException("Username is already in use.");
+        }
+    }
+
+    private void isEmailTaken(@Email String email) throws RuntimeException{
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new AccountWithEmailAlreadyExistsException("Email is already in use.");
+        }
+    }
+
+    private void validateUser(User user) throws RuntimeException{
+        try{
+            UserValidator.isValidUserAccount(user);
+        }catch (Exception e){
+            LOGGER.error(e);
+            throw e;
+        }
     }
 }
