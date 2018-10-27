@@ -8,41 +8,41 @@ public class UserValidator {
     public static void isValidUserAccount(User user){
         if (user.getUsername() != null) {
             if (!UserValidator.isValidUsername(user.getUsername())) {
-                throw new UsernameFormatException("Username length is bad");
+                throw new UserFieldFormatException("Username");
             }
         } else {
-            throw new UsernameNullException("Username cannot be null.");
+            throw new UserFieldNullException("Username");
         }
 
         if (user.getEmail() != null) {
             if (!UserValidator.isValidEmail(user.getEmail())) {
-                throw new EmailFormatException("Email is invalid");
+                throw new UserFieldFormatException("Email");
             }
         } else {
-            throw new EmailNullException("Email cannot be null.");
+            throw new UserFieldNullException("Email");
         }
 
         if (user.getPassword() == null) {
-            throw new PasswordNullException("Password cannot be null.");
+            throw new UserFieldNullException("Password");
         }
 
         if (user.getFirstName() == null) {
-            throw new FirstNameNullException("First name cannot be null.");
+            throw new UserFieldNullException("First name");
         }
 
         if (user.getLastName() == null) {
-            throw new LastNameNullException("Last name cannot be null.");
+            throw new UserFieldNullException("Last name");
         }
 
         if (user.getPhoneNumber() != null) {
             if (!UserValidator.isValidPhoneNumber(user.getPhoneNumber())) {
-                throw new InvalidPhoneNumberException("Phone number is not valid.");
+                throw new UserFieldFormatException("Phone number");
             }
         }
 
         if (user.getAddress().getZipCode() != null) {
             if (!UserValidator.isValidZipCode(user.getAddress().getZipCode())) {
-                throw new InvalidZipCodeException("Zip Code is not valid.");
+                throw new UserFieldFormatException("Zip Code");
             }
         }
     }
